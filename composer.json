@@ -1,5 +1,12 @@
 {
-    "name": "oOojhonnyoOo/simoa-src",
+    "version": "1.0.0",
+    "name": "ooojhonnyooo/simoa-src",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/oOojhonnyoOo/simoa-src.git"
+        }
+    ],
     "autoload": {
         "classmap": [
             "src/"
@@ -10,6 +17,7 @@
     },
     "require": {
         "psr/http-message": "^2.0",
-        "symfony/yaml": "^6.3"
+        "symfony/yaml": "^6.3",
+        "ooojhonnyooo/simoa-src": "dev-master"
     }
 }
