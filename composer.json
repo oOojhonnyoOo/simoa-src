@@ -17,7 +17,6 @@
     },
     "require": {
         "psr/http-message": "^2.0",
-        "symfony/yaml": "^6.3",
-        "ooojhonnyooo/simoa-src": "dev-master"
+        "symfony/yaml": "^6.3"
     }
 }
