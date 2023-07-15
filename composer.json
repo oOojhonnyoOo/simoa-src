@@ -1,6 +1,14 @@
 {
     "version": "1.0.0",
     "name": "ooojhonnyooo/simoa-src",
+    "description": "Simoa src library",
+    "type": "library",
+    "keywords": [
+        "simoa-src",
+        "ooojhonnyooo"
+    ],
+    "homepage": "https://www.google.com.br",
+    "license": "GPL-3.0-or-later",
     "repositories": [
         {
             "type": "vcs",
