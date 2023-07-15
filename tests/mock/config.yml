@@ -1,0 +1,1026 @@
+default:
+  sitename: conta
+  aud: conasems
+  label: Conta
+  ## Commented values are automatically set.
+  ## Highly recommendable to keep them as they are.
+  # path: [DIR]
+  # public: [DIR]/public
+  # data: [DIR]/.simoa/.data
+  # url: [http_host]
+
+  ## [TO DO] implementar configs de api
+  # api:
+  #   # origin: []
+  #   route: api/[site]/[module]/[method]/[cpf]?/
+
+  # paths:
+  #   aws:
+  #     public: "/data/conta/public"
+  #     private: "/data/conta/private"
+  #     preview: "/data/conta/preview"
+  #     data: "/data/conta/.simoa/.data"
+  #     history: "/data/conta/.simoa/.history"
+
+  env:
+    local:
+      server:
+        conta: http://conta.conasems:8201
+        simoa: http://simoa.conasems:8202
+        portal: http://mais.conasems:8203
+        ava: http://ava.conasems:8204
+        tracking: http://ava.conasems:8205
+        forum: http://ava.conasems:8206
+        atividade: http://ava.conasems:8207
+        mostras: http://mostras.conasems:8211
+      client:
+        conta: http://conta.conasems.local:8401
+        simoa: http://simoa.conasems.local:8402
+        portal: http://mais.conasems.local:8403
+        maisconasems: http://mais.conasems.local:8403
+        ava: http://mais.conasems.local:8403
+        tracking: http://mais.conasems.local:8405
+        mostras: http://mostras.conasems.local:8411
+
+    dev:
+      server:
+        conta: https://conta.conasems.simoa.dev
+        simoa: https://simoa.conasems.simoa.dev
+        portal: https://mais.conasems.simoa.dev
+        ava: https://ava.conasems.simoa.dev
+        tracking: https://tracking.conasems.simoa.dev
+        forum: https://forum.conasems.simoa.dev
+        mostras: https://mostras.conasems.simoa.dev
+      client:
+        conta: https://conta.conasems.dev
+        simoa: https://simoa.conasems.dev
+        portal: https://mais.conasems.dev
+        maisconasems: https://mais.conasems.dev
+        mostras: https://mostras.conasems.dev
+
+    homolog:
+      server:
+        conta: https://conta.api.conasems.app
+        simoa: https://simoa.api.conasems.app
+        portal: https://mais.api.conasems.app
+        ava: https://ava.api.conasems.app
+        tracking: https://tracking.api.conasems.app
+        forum: https://forum.api.conasems.app
+        mostras: https://mostras.api.conasems.app
+      client:
+        conta: https://live.conta.conasems.app
+        simoa: https://live.simoa.conasems.app
+        portal: https://live.mais.conasems.app
+        maisconasems: https://live.mais.conasems.app
+        mostras: https://live.mostras.conasems.app
+
+    aws:
+      server:
+        conta: https://conta.aws.api.conasems.app
+        simoa: https://simoa.aws.api.conasems.app
+        portal: https://mais.aws.api.conasems.app
+        ava: https://ava.aws.api.conasems.app
+        tracking: https://tracking.aws.api.conasems.app
+        forum: https://forum.aws.api.conasems.app
+        atividade: https://atividade.aws.api.conasems.app
+        relatorios: https://relatorios.aws.api.conasems.app
+        mensagens: https://mensagens.aws.api.conasems.app
+        mostras: https://mostras.aws.api.conasems.app
+      client:
+        conta: https://conta.conasems.app
+        simoa: https://simoa.conasems.app
+        portal: https://mais.conasems.app
+        maisconasems: https://mais.conasems.app
+        mostras: https://mostras.conasems.app
+
+  solr:
+    default: http://conta.solr:8983/solr/conta.conasems
+    ufrgs: http://conta.solr:8983/solr/ufrgs
+    ava: http://ava.solr:8983/solr/ava.conasems
+    conta: http://conta.solr:8983/solr/conta.conasems
+    tracking: http://tracking.solr:8983/solr/tracking.conasems
+
+  formats:
+    data: "[site]/[module]/[id]"
+    extension: .json
+    history: true
+
+  cache:
+    asset: src/.asset/[module]/asset.php
+    path: public/[module]
+    filename: "[slug]"
+    extension: .json
+    url: "[module]/[slug].json"
+
+  auth: false
+  allow:
+    - root
+
+  fl:
+    - site
+    - module
+    - role
+    - id
+    - title
+    - key
+    - sortDate
+    - profilePicture
+    - cpf
+    - roles
+    - fullname
+    - email
+    - uf
+    - municipio
+    - status
+
+  index:
+    - cpf
+    - title
+    - username
+    - fullname
+    - email
+    - role
+    - roles
+    - password
+    - hashcpf
+    - status
+    - token
+    - profilePicture
+    - createdAt
+    - key
+    - ibge
+    - altEmail
+
+  keys:
+    default: 3yVFi6Vpdi # weak encriptions such as hashcpf or internal ids
+    token: D65LzmAS2BlXgmswBXfUsjDO8kulESWk # token key in the whole ecosystem
+    publicsolr: W89jk0u5xlPYjJ6GKvCjgNd6GG3D6dRM # used to query solr proxy in siblings systems
+    system: m5C13y2Q5di2mHIp7Jk7xqeXCIZfJqj2 # call any endpoint in ecosystem taking all privileges granted
+    partnerKey: EO2k51wxqw0cPgvVTvKSEXafpllRj5da
+
+  smtp:
+    server: mail.tincoa.com.br
+    port: 587
+    mail: noreply@simoa.dev
+    password: 57HT2289gV
+
+  s3:
+    profile: s3
+    bucket: conasems-ava-prod
+    region: sa-east-1
+    accept_file_types: '/\.(gif|jpe?g|png|pdf|zip|docx?|pptx?)$/i'
+    format: "[site]/[module]/[filename]"
+
+# info: módulo nativo
+# api/site/info/list => lista roles que podem ver a list() dos módulos
+# usado para montar o menu da admin
+info:
+  list():
+    auth: false
+
+token:
+  # tempo de duração de um token em minutos
+  minutes: 10080
+  minutesToRenew: 10
+
+  list():
+    auth: true
+    label: Sessões
+    allow:
+      - conta/dev
+      - conta/admin
+    fl:
+      - cpf
+      - fullname
+      - sortDate
+      - roles
+      - id
+    view:
+      template: table
+      search: true
+      new: false
+      totalNotation: compact # [compact|standard]
+      more:
+        - label: Download CSV
+          url: "/[site]/[module]/downloadCsv/[URL.searchParams]"
+      props:
+        head:
+          - template: string
+            label: CPF
+            value: cpf
+            sort: cpf
+          - template: string
+            label: Nome
+            value: fullname
+            sort: fullnameAlpha
+          - template: string
+            label: Horário
+            value: sortDate
+            sort: sortDate
+
+  edit():
+    - template: box
+      id: data
+      title: "Tokens"
+      fields:
+        - name: cpf
+          label: CPF
+          template: inputText
+        - name: fullname
+          label: Nome Completo
+          template: inputText
+        - name: roles
+          label: Roles
+          template: inputText
+        - name: tokenId
+          label: tokenId
+          template: inputText
+
+    - template: box
+      id: log
+      title: "Log"
+      fields:
+        - name: browser
+          label: browser
+          template: JSONTableView
+        - name: _server
+          label: server
+          template: JSONTableView
+
+    - template: actions
+      id: actions
+      fields:
+        - name: foo
+          template: button
+          label: OK
+          style: primary
+
+  cache:
+    asset: src/.asset/[module]/asset.php
+    path: public/[module]
+    filename: "[tokenId]"
+    extension: .json
+    url: "!"
+    request: conta/token/[tokenId]
+
+  totalTokens():
+    auth: false
+    system: true
+
+user:
+  # schema:
+  #   cpf: required string cpf index:cpf
+  #   fullname: required string index:fullname
+  #   email: required email index:email
+  #   roles: required string inArray([conta,maisconasems,simoa])
+
+  info():
+    auth: true
+    allow:
+      - conta/admin
+    label: Contas
+
+  refreshToken():
+    auth: true
+    allow:
+      - all
+  # check if cpf exists
+  cpf():
+    auth: false
+    data:
+      cpf: required string
+
+    fl:
+      - cpf
+
+  signup():
+    auth: false
+    data:
+      cpf: required string cpf index:cpf
+      fullname: required string index:fullname
+      email: required string email index:email
+      site: required string inArray([conta,maisconasems,simoa,mostras])
+      createdAt: string index:createdAt
+
+  setPassword():
+    auth: false
+    data:
+      hashcpf: required string length(65)
+      password: required string min(8) max(20)
+      # criar: password2 equalsTo(password)
+
+  signin():
+    auth: false
+    data:
+      cpf: required string
+      password: required string max(20)
+      site: required string inArray([conta,maisconasems,simoa,mostras])
+
+  fakesignin():
+    auth: false
+    data:
+      cpf: required string cpf
+
+  recoverPassword():
+    auth: false
+    data:
+      cpf: required string cpf
+
+  recoverPasswordLink():
+    auth: true
+    allow:
+      - ava/admin
+    data:
+      cpf: required string cpf
+
+  addPermissions():
+    auth: true
+    allow:
+      - conta/admin
+    data:
+      cpf: required string cpf
+      roles: required array
+
+  removeRole():
+    auth: false
+    system: true
+
+  list():
+    auth: true
+    allow:
+      - conta/dev
+      - conta/admin
+      - ava/admin
+    fl:
+      - cpf
+      - fullname
+      - email
+      - status
+      - roles
+      - id
+      - createdAt
+    fq:
+      - label: Nome
+        name: fullname
+        template: text
+      - label: cpf
+        name: cpf
+        template: text
+      - label: email
+        name: email
+        template: text
+    view:
+      template: table
+      search: true
+      fq:
+        - label: Nome
+          name: fullname
+          template: text
+        - label: CPF
+          name: cpf
+          template: text
+        - label: email
+          name: email
+          template: text
+        - label: role
+          name: roles
+          template: select
+          props:
+            url: "conta/roles/list?fl=title&rows=1000"
+            label: title
+            value: title
+      new: true
+      totalNotation: standard # [compact|standard]
+      more:
+        - label: Download CSV
+          url: "/[site]/[module]/downloadCsv/[URL.searchParams]"
+      props:
+        head:
+          - template: string
+            label: CPF
+            value: cpf
+            sort: cpf
+          - template: string
+            label: Nome
+            value: fullname
+            sort: fullnameAlpha
+          - template: string
+            label: E-mail
+            value: email
+            sort: email
+          - template: string
+            label: Status
+            value: status
+            sort: status
+          - template: date
+            label: Data de inscrição
+            value: createdAt
+            sort: createdAt
+          - template: dotsMenu
+            fields:
+              - label: Usuário no AVA
+                baseLink: "/ava/users/list/?fq[cpf]="
+                value: cpf
+
+  hint():
+    fl:
+      - cpf
+      - fullname
+
+  current():
+    auth: true
+    allow:
+      - all
+
+  populate():
+    auth: true
+    allow:
+      - conta/dev
+      - conta/admin
+
+  updatePassword():
+    auth: true
+    allow:
+      - all
+    data:
+      password: required string min(8) max(20)
+      confirm: required string min(8) max(20)
+      currentPassword: required string
+
+  updateEmail():
+    auth: true
+    allow:
+      - all
+    data:
+      email: required string email
+      altEmail: string
+
+  updateMyData():
+    auth: true
+    allow:
+      - all
+    data:
+      email: required string email
+      altEmail: string
+      fullname: required string index:fullname
+      telefone1: string
+
+  updateUserPassword():
+    auth: true
+    allow:
+      - conta/admin
+    data:
+      password: required string min(8) max(20)
+
+  updateUserRoles():
+    auth: true
+    allow:
+      - conta/admin
+      - ava/admin
+
+  save():
+    auth: true
+    allow:
+      - conta/dev
+      - conta/admin
+
+    data:
+      fullname: required string index:fullname,title
+      cpf: required string cpf index:cpf
+      email: required email index:email
+      altEmail: string index:altEmail
+      roles: required array index:roles
+      createdAt: string index:createdAt
+
+  saveBySystem():
+    auth: false
+    system: true
+
+  sendVerificationEmailBySystem():
+    auth: false
+    system: true
+
+  listUser():
+    auth: false
+    system: true
+
+  signinBySystem():
+    auth: false
+    system: true
+
+  delete():
+    auth: true
+    allow:
+      - conta/dev
+      - conta/admin
+
+    data:
+      id: required string
+
+  terminate():
+    auth: true
+    allow:
+      - all
+
+    data:
+      confirm: required boolean
+
+  signout():
+    auth: true
+    allow:
+      - all
+
+  __root():
+    auth: true
+    allow:
+      - all
+
+    data:
+      cpf: required string
+      secret: required string
+
+  addAltEmail():
+    auth: false
+    data:
+      cpf: required string cpf
+      altEmail: required string email
+      altEmail2: required string email
+
+  resendVerificationEmail():
+    auth: false
+    data:
+      cpf: required string cpf
+      email: required string email
+      curso: required string curso
+
+  edit():
+    - template: box
+      id: data
+      title: "Conta"
+      fields:
+        - name: cpf
+          label: CPF
+          template: inputText
+        - name: fullname
+          label: Nome Completo
+          template: inputText
+        - name: email
+          label: E-mail
+          template: inputText
+        - name: altEmail
+          label: E-mail alternativo
+          template: inputText
+        - name: status
+          label: Status
+          template: select
+          props:
+            options:
+              - label: active
+                value: active
+              - label: emailSent
+                value: emailSent
+
+        - name: roles
+          label: Roles
+          template: select
+          props:
+            multiple: true
+            url: "conta/roles/list?fl=title&rows=5000"
+            label: title
+            value: title
+
+        - name: recoverPasswordLink
+          label: URL de validação do e-mail
+          template: inputText
+          props:
+            readOnly: true
+
+roles:
+  save():
+    auth: true
+    allow:
+      - conta/admin
+    data:
+      title: required string index:title
+      key: required string index:key
+
+  list():
+    auth: true
+    label: Roles
+    allow:
+      - conta/admin
+    fl:
+      - title
+      - id
+      - sortDate
+
+    view:
+      template: table
+      search: true
+      fq:
+        - label: Título
+          name: title
+          template: text
+        - label: ÚLTIMA EDIÇÃO
+          name: sortDate
+          template: date
+      new: true
+      totalNotation: standard # [compact|standard]
+      more:
+        - label: Download CSV
+          url: "/[site]/[module]/downloadCsv/[URL.searchParams]"
+      props:
+        head:
+          - template: string
+            label: Título
+            value: title
+            sort: titleAlpha
+          - template: date
+            label: ÚLTIMA EDIÇÃO
+            value: sortDate
+            sort: sortDate
+
+  edit():
+    - template: box
+      id: data
+      title: "Role"
+      fields:
+        - name: title
+          label: role
+          template: inputText
+
+profile:
+  schema:
+    id: index:id
+    cpf: required string cpf index:cpf
+    fullname: required string index:fullname
+    email: required string index:email
+    altEmail: string email index:altEmail
+    profilePicture: string index:profilePicture
+    cidade: string index:municipio
+    uf: string index:uf
+    telefone1: string index:telefone1
+    telefone2: string index:telefone2
+
+  save():
+    auth: true
+    allow:
+      - all
+    data:
+      fullname: required string index:fullname
+      email: required string index:email
+      altEmail: string index:altEmail
+      profilePicture: string index:profilePicture
+      cidade: string index:municipio
+      uf: string index:uf
+      telefone1: string index:telefone1
+      telefone2: string index:telefone2
+
+  cropAndSave():
+    auth: true
+    allow:
+      - all
+    data:
+      profilePicture: string index:profilePicture
+
+    thumbs:
+      - avatar:
+        maxWidth: 46
+        maxHeight: 46
+
+  getProfile():
+    auth: false
+    system: true
+
+  list():
+    label: Perfil
+    auth: true
+    allow:
+      - all
+    fl:
+      - id
+      - cpf
+      - fullname
+      - cidade
+      - uf
+      - telefone1
+      - telefone2
+      - profilePicture
+
+    view:
+      template: table
+      search: true
+      fq:
+        - label: Nome
+          name: fullname
+          template: text
+        - label: CPF
+          name: cpf
+          template: text
+      new: true
+      totalNotation: standard # [compact|standard]
+      more:
+        - label: Download CSV
+          url: "/[site]/[module]/downloadCsv/[URL.searchParams]"
+      props:
+        head:
+          - template: string
+            label: CPF
+            value: cpf
+            sort: cpf
+          - template: string
+            label: Nome
+            value: fullname
+            sort: fullnameAlpha
+
+  edit():
+    - template: box
+      id: data
+      title: Dados do Perfil
+      fields:
+        - name: id
+          label: id
+          template: inputHidden
+        - name: cpf
+          label: CPF
+          template: select
+          props:
+            lazyUrl: conta/user/hint
+            url: "conta/user/list?fl=cpf,fullname,email&fq="
+            label: cpf
+            value: cpf
+        - name: fullname
+          label: Nome completo
+          template: select
+          props:
+            url: "conta/user/list?fl=cpf,fullname,email&rows=1000"
+            label: fullname
+            value: fullname
+            filterBy: cpf
+        - name: email
+          label: E-mail
+          template: select
+          props:
+            url: "conta/user/list?fl=cpf,fullname,email&rows=1000"
+            label: email
+            value: email
+            filterBy: cpf
+        - name: profilePicture
+          label: Imagem do Perfil
+          template: inputFile
+          description: Faça upload ou copie a URL da imagem
+          props:
+            url: "api/conta/profile/fileupload"
+          thumbs:
+            - avatar:
+              maxWidth: 46
+              maxHeight: 46
+              crop:
+                url: conta/profile/crop
+                autoload: true
+                autosave: true
+        - name: cidade
+          label: Cidade
+          template: inputText
+        - name: uf
+          label: UF
+          template: select
+          props:
+            options:
+              - label: AC
+                value: AC
+              - label: AL
+                value: AL
+              - label: AP
+                value: AP
+              - label: AM
+                value: AM
+              - label: BA
+                value: BA
+              - label: CE
+                value: CE
+              - label: DF
+                value: DF
+              - label: ES
+                value: ES
+              - label: GO
+                value: GO
+              - label: MA
+                value: MA
+              - label: MT
+                value: MT
+              - label: MS
+                value: MS
+              - label: MG
+                value: MG
+              - label: PA
+                value: PA
+              - label: PB
+                value: PB
+              - label: PR
+                value: PR
+              - label: PE
+                value: PE
+              - label: PI
+                value: PI
+              - label: RJ
+                value: RJ
+              - label: RN
+                value: RN
+              - label: RS
+                value: RS
+              - label: RO
+                value: RO
+              - label: RR
+                value: RR
+              - label: SC
+                value: SC
+              - label: SP
+                value: SP
+              - label: SE
+                value: SE
+              - label: TO
+                value: TO
+        - name: telefone1
+          label: Telefone 1
+          template: inputText
+        - name: telefone2
+          label: Telefone 2
+          template: inputText
+
+        - name: nascimento
+          label: Data de nascimento
+          template: inputText
+        - name: ibge
+          label: codigo ibge
+          template: inputHidden
+        - name: escolaridade
+          label: Escolaridade
+          template: inputText
+        - name: sexo
+          label: Sexo
+          template: inputText
+        - name: perfilUfrgs
+          label: Perfil UFRGS
+          template: inputText
+
+ufrgs:
+  schema:
+    id: index:id
+    cpf: required string cpf index:cpf
+    fullname: required string index:fullname
+    email: required string index:email
+    telefone1: string index:telefone1
+    turma: string index:turma
+    ibge: string index:ibge
+    cidade: string index:municipio
+    uf: string index:uf
+    nascimento: string
+    grupoPreceptor: int index:grupoPreceptor
+
+  list():
+    label: UFRGS - Alunos
+    auth: true
+    allow:
+      - all
+    fl:
+      - id
+      - cpf
+      - fullname
+      - email
+      - cidade
+      - uf
+      - telefone1
+      - turma
+      - grupoPreceptor
+
+    view:
+      template: table
+      search: true
+      fq:
+        - label: CPF
+          name: cpf
+          template: text
+        - label: Turma
+          name: turma
+          template: text
+        - label: Grupo
+          name: grupoPreceptor
+          template: text
+      new: true
+      totalNotation: standard # [compact|standard]
+      more:
+        - label: Download CSV
+          url: "/[site]/[module]/downloadCsv/[URL.searchParams]"
+      props:
+        head:
+          - template: string
+            label: CPF
+            value: cpf
+            sort: cpf
+          - template: string
+            label: Nome
+            value: fullname
+            sort: fullnameAlpha
+          - template: string
+            label: E-mail
+            value: email
+            sort: email
+          - template: string
+            label: Turma
+            value: turma
+            sort: turma
+          - template: string
+            label: grupo Preceptor
+            value: grupoPreceptor
+            sort: grupoPreceptor
+  save():
+    auth: true
+    allow:
+      - conta/admin
+
+    data: schema
+
+ufrgsTutores:
+  schema:
+    id: index:id
+    cpf: required string cpf index:cpf
+    fullname: required string index:fullname
+    email: required string index:email
+    turma: string index:turma
+    ibge: string index:ibge
+    cidade: string index:municipio
+    uf: string index:uf
+    nascimento: string
+    grupoPreceptor: int index:grupoPreceptor
+    role: string
+
+  list():
+    label: UFRGS - Tutores
+    auth: true
+    allow:
+      - all
+    fl:
+      - id
+      - cpf
+      - fullname
+      - email
+      - cidade
+      - uf
+      - turma
+      - role
+      - grupoPreceptor
+
+    view:
+      template: table
+      search: true
+      fq:
+        - label: CPF
+          name: cpf
+          template: text
+        - label: Turma
+          name: turma
+          template: text
+        - label: Grupo
+          name: grupoPreceptor
+          template: text
+      new: true
+      totalNotation: standard # [compact|standard]
+      more:
+        - label: Download CSV
+          url: "/[site]/[module]/downloadCsv/[URL.searchParams]"
+      props:
+        head:
+          - template: string
+            label: CPF
+            value: cpf
+            sort: cpf
+          - template: string
+            label: Nome
+            value: fullname
+            sort: fullnameAlpha
+          - template: string
+            label: E-mail
+            value: email
+            sort: email
+          - template: string
+            label: Turma
+            value: turma
+            sort: turma
+          - template: string
+            label: Perfil
+            value: role
+            sort: role
+          - template: string
+            label: grupo Preceptor
+            value: grupoPreceptor
+            sort: grupoPreceptor
+  save():
+    auth: true
+    allow:
+      - conta/admin
+
+    data: schema
+
+includes:
+  - test

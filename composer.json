@@ -1,0 +1,15 @@
+{
+    "name": "oOojhonnyoOo/simoa-src",
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9"
+    },
+    "require": {
+        "psr/http-message": "^2.0",
+        "symfony/yaml": "^6.3"
+    }
+}

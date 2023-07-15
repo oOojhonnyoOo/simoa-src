@@ -1,0 +1,102 @@
+teste:
+  schema:
+    id: index:id
+    cpf: required string index:cpf
+    fullname: required string index:fullname
+
+  cache:
+    asset: src/.asset/asset.php
+    path: public/[module]
+    filename: "[slug]"
+    extension: .json
+    url: "[module]/[slug].json"
+    request: "[module]/[slug].json"
+    preview: "preview/[module]"
+    previewRequest: "preview/[site]/[module]/[slug]"
+
+  save():
+    auth: true
+    allow:
+      - all
+    data: schema
+
+  status:
+    auth: true
+    allow:
+      - all
+    data:
+      cpf: required string
+
+  info():
+    auth: false
+
+  isAccepted():
+    auth: true
+    allow:
+      - all
+
+  list():
+    auth: true
+    label: Test list
+    allow:
+      - conta/dev
+      - conta/admin
+    fl:
+      - id
+      - cpf
+      - fullname
+
+    view:
+      template: table
+      search: true
+      new: true
+      more:
+        - label: Download CSV
+          url: "/[site]/[module]/downloadCsv/[URL.searchParams]"
+      totalNotation: compact # [compact|standard]
+      fq:
+        - label: CPF
+          name: cpf
+          template: inputText
+      props:
+        head:
+          - template: string
+            label: ID
+            value: id
+            sort: id
+          - template: string
+            label: CPF
+            value: cpf
+            sort: cpf
+          - template: string
+            label: Nome Completo
+            value: fullname
+            sort: fullnameAlpha
+
+  edit():
+    - template: box
+      id: data
+      title: Test edit
+      fields:
+        - name: cpf
+          label: CPF
+          template: inputText
+        - name: fullname
+          label: Nome completo
+          template: inputText
+
+    - template: actions
+      id: actions
+      fields:
+        - name: save
+          template: button
+          label: Salvar
+          style: primary
+        - name: delete
+          template: button
+          label: Deletar
+          style: danger
+        - name: preview
+          template: button
+          label: Preview
+          style: default
