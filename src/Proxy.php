@@ -23,8 +23,9 @@ class Proxy
 
   private function data()
   {
-    if (isset($this->request->contenttype)) {
-      if ($this->request->contenttype == "application/json") {
+
+    if(isset($this->request->contenttype)){
+      if($this->request->contenttype == "application/json"){
         $request = file_get_contents("php://input"); 
         $this->data = $request;
       } else {
@@ -41,10 +42,9 @@ class Proxy
     }
   }
 
-
   private function getRequest()
   {
-    $request = RequestURI();
+    $request = Helper::requestURI();
 
     preg_match(
       '/(?:\/?proxy)?\/?(\w+)\/(\w+)\/(\w+)\/?(\w+)?\/?(\w+)?\/?(\d+)?/',
@@ -88,20 +88,18 @@ class Proxy
     $this->headersCurl[] = "Content-Type: ". $ct;
   }
 
-
   private function config()
   {
     $this->config = new Config();
     $this->config->env();
   }
 
-
   private function url()
   {
     $s = $this->headers->site;
 
     if (isset($this->config->server->$s)) {
-      $this->url = $this->config->server->$s . str_replace("proxy/", "/api/", RequestURI());
+      $this->url = $this->config->server->$s . str_replace("proxy/", "/api/", Helper::requestURI());
     } else {
       $this->response->error('invalidUrl')->echo();
       exit;

@@ -57,28 +57,59 @@ class Helper
     }
   }  
 
+
+  function debugg($var, $mode = "default")
+  {
+    if ($mode == "json") {
+      $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
+      $json = (object)[];
+      $json->file = $trace[1]['file'];
+      $json->line = $trace[1]['line'];
+      $json->debugg = $var;
+  
+      if (isset($json->debugg->config)) {
+        unset($json->debugg->config);
+      }
+  
+      if (isset($json->debugg->token->config)) {
+        unset($json->debugg->token->config);
+      }
+  
+  
+      echo json_encode($json);
+    } else {
+      $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+      echo $trace[0]['file'] . ":" . $trace[0]['line'];
+      echo "
+      ";
+      echo "<pre>";
+      print_r($var);
+      echo "</pre>";
+    }
+  }
+
+  function d($val, $deep = 0)
+  {
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
+    $r = (object)[
+      "value" => print_r(is_bool($val) ? ($val == true) ? "true" : "false" : $val, true),
+      "type" => gettype($val),
+      "trace" => $trace[$deep]
+    ];
+    self::debugg($r, "default");
+  }  
+
 }
 
-function object($array, $associative = false)
-{
-  return json_decode(json_encode($array), $associative);
-}
+// function object($array, $associative = false)
+// {
+//   return json_decode(json_encode($array), $associative);
+// }
 
-function jdebugg($var)
-{
-  debugg($var, 'json');
-}
-
-function d($val, $deep = 0)
-{
-  $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
-  $r = (object)[
-    "value" => print_r(is_bool($val) ? ($val == true) ? "true" : "false" : $val, true),
-    "type" => gettype($val),
-    "trace" => $trace[$deep]
-  ];
-  debugg($r, "default");
-}
+// function jdebugg($var)
+// {
+//   debugg($var, 'json');
+// }
 
 function dd()
 {
@@ -107,11 +138,11 @@ function getNowString()
   return date("Y:m:d") . "T" . date("H:i:s") . "Z";
 }
 
-function stringToTimestamp($stringTime)
-{
-  $strTime = trim(str_replace(["T", "Z"], " ", $stringTime));
-  return strtotime($strTime);
-}
+// function stringToTimestamp($stringTime)
+// {
+//   $strTime = trim(str_replace(["T", "Z"], " ", $stringTime));
+//   return strtotime($strTime);
+// }
 
 function debugg($var, $mode = "default")
 {

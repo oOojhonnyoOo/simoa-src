@@ -14,8 +14,8 @@ class Read extends API
 
   function getRequest()
   {
-    $request = RequestURI();
-    
+    $request = Helper::requestURI();
+
     // backlog: substituir /(?:\/?api)?/ por verificação automática do host path da api
     preg_match(
       '/(\w+)\/(\w+)\/(\S+)?\/?(\w+)?\/?(\w+)?\/?(\d+)?/',

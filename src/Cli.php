@@ -98,7 +98,8 @@ class Cli
 
     $response = call_user_func_array([$C, $m], $p);
 
-    debugg($response);
+    Helper::debugg($response);
+
   }
 
   function x()
