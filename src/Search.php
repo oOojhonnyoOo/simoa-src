@@ -6,7 +6,6 @@ use Solr;
 
 class Search
 {
-
   var $core;
   var $site;
   var $module;

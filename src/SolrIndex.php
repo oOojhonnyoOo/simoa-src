@@ -6,7 +6,6 @@ use Solr;
 
 class SolrIndex
 {
-
   var $doc;
 
   function __construct($doc, $core = null)
@@ -71,9 +70,9 @@ class SolrIndex
       }
     }
 
-    if(isset($this->doc->data->sortDate) && (isset($this->doc->data->keepSortDate) && $this->doc->data->keepSortDate)){
+    if (isset($this->doc->data->sortDate) && (isset($this->doc->data->keepSortDate) && $this->doc->data->keepSortDate)) {
       $doc->addField('sortDate', $this->doc->data->sortDate);
-    } else{
+    } else {
       $doc->setSortDate();
     }
 

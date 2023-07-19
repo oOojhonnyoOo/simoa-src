@@ -6,14 +6,9 @@ use Solr;
 
 abstract class Controller
 {
-
   var $fs;
   var $cache;
   var $keepStatusOnSave = true;
-
-  function __construct()
-  {
-  }
 
   public function __solrDeleteByQuery($query)
   {
@@ -32,7 +27,6 @@ abstract class Controller
     $tmp = $this->config->data . "/tmp/" . $this->headers->module;
 
     foreach ($response->docs as $doc) {
-
       unset($doc->_version_);
       $_docs[] = $doc;
 
@@ -323,7 +317,7 @@ abstract class Controller
       $id = $this->data->id;
     }
 
-    if(isset($this->config->saveS3)){
+    if (isset($this->config->saveS3)) {
       $bucket = $this->config->saveS3->bucket;
       $region = $this->config->saveS3->region;
       $bucketUrl = "https://".$bucket.".s3.".$region.".amazonaws.com/";
@@ -339,9 +333,10 @@ abstract class Controller
 
       $headers = get_headers($publicUrl);
       $status_code = $headers[0];
-      if(strpos($status_code,"200")){
+      if (strpos($status_code,"200")) {
         $data = json_decode(file_get_contents($publicUrl));
         unset($data->data->password);
+
         return $this->response->add('response', $data);
       }
     }
@@ -355,9 +350,10 @@ abstract class Controller
     if ($response->numFound > 0) {
       $file = $response->docs[0]->_data;
 
-      if(file_exists($file)){
+      if (file_exists($file)) {
         $data = json_decode(file_get_contents($file));
         unset($data->data->password);
+
         return $this->response->add('response', $data);
       }
     }
@@ -379,18 +375,22 @@ abstract class Controller
     if (!$this->keepStatusOnSave) {
       return;
     }
+
     $id = isset($this->headers->id) ? $this->headers->id : null;
     if (!$id && isset($this->data->id)) {
       $id = $this->data->id;
     }
+
     if (!isset($this->data->_status)) {
       $this->data->_status = [];
     }
+
     if ($id) {
       $tempData = $this->findOne('id:' . $id);
       if (isset($tempData->cache) && !isset($this->data->cache)) {
         $this->data->cache = $tempData->cache;
       }
+
       if (isset($tempData->request) && !isset($this->data->request)) {
         $this->data->request = $tempData->request;
       }
@@ -406,19 +406,23 @@ abstract class Controller
       if (isset($tempData->url) && !isset($this->data->url)) {
         $this->data->url = $tempData->url;
       }
+
       if (isset($tempData->_status)) {
         //apenas para retrocompatibilidade
         if (is_string($tempData->_status)) {
           $this->data->_status = [$tempData->_status];
         }
+
         if (is_array($tempData->_status)) {
           $this->data->_status = array_merge($tempData->_status, $this->data->_status);
         }
       }
     }
+
     if (!is_array($this->data->_status)) {
       $this->data->_status = (array) $this->data->_status;
     }
+
     $this->data->_status[] = "draft";
     $this->data->_status = array_values(array_unique($this->data->_status));
   }
@@ -435,7 +439,7 @@ abstract class Controller
     $this->fs = $this->fileSystemSave();
 
     //salva no s3 e apaga do local
-    if(isset($this->config->saveS3)){
+    if (isset($this->config->saveS3)) {
       $profile = 'saveS3';
       $environment = isset($this->config->{$profile}->environment) ? $this->config->{$profile}->environment : '';
       if (($environment == $this->config->_env) && !$this->saveDataToS3($this->fs->_data, $profile)) {
@@ -443,7 +447,7 @@ abstract class Controller
       }
     }
 
-    if(isset($this->fs->_history) && !empty($this->fs->_history)){
+    if (isset($this->fs->_history) && !empty($this->fs->_history)) {
       $profile = 'historyS3';
       $environment = isset($this->config->{$profile}->environment) ? $this->config->{$profile}->environment : '';
       if (($environment == $this->config->_env) && !$this->saveDataToS3($this->fs->_history, $profile)) {
@@ -467,7 +471,8 @@ abstract class Controller
     $peacesfilePath = explode('/',$path);
     $filename = end($peacesfilePath);
     $result = $this->fileuploadByCli($path, $filename, "private", $profile);
-    if($result->success){
+
+    if ($result->success) {
       $json = json_decode(file_get_contents($result->response->publicUrl));
       if (json_last_error()) {
         return $this->response->error('S3UploadError', 500);
@@ -480,6 +485,7 @@ abstract class Controller
       unset($this->response->response->url);
       unset($this->response->response->publicUrl);
     }
+
     return true;
   }
 
@@ -575,6 +581,7 @@ abstract class Controller
     // then save
     $this->parse('save');
     $this->keepStatusOnSave = false;
+    
     return $this->save();
   }
 
@@ -598,6 +605,7 @@ abstract class Controller
     if (!isset($this->data->cache)) {
       return (object)["success" => true];
     }
+
     if (file_exists($this->data->cache)) {
       unlink($this->data->cache);
     }
@@ -607,6 +615,7 @@ abstract class Controller
     if (isset($this->data->url)) {
       $this->data->url = "";
     }
+
     if (isset($this->data->request)) {
       $this->data->request = "";
     }
@@ -616,11 +625,11 @@ abstract class Controller
     $this->parse('save');
     return $this->save();
   }
+
   abstract function parse($fnName);
 
   public function preview()
   {
-
     $this->data = $this->findOne('id:' . $this->headers->id);
 
     $this->data->_status[] = 'preview';
@@ -631,6 +640,7 @@ abstract class Controller
 
     // then save
     $this->parse('save');
+
     return $this->save();
   }
 
@@ -759,6 +769,7 @@ abstract class Controller
     $fs = new FileSystem($this);
     $this->response->add('fs', $fs->delete());
     $this->response->add('solr', $this->solrDelete());
+
     return $this->response;
   }
 
@@ -796,9 +807,11 @@ abstract class Controller
         if ($this->config->_env == "local") {
           return $this->response->error($response->error->msg);
         }
+
         return $this->response->error('solr');
       }
     }
+
     return $commit;
   }
 
@@ -812,6 +825,7 @@ abstract class Controller
       ];
     }
     $fs = new FileSystem($this);
+
     return $fs->save();
   }
 
@@ -1436,7 +1450,7 @@ abstract class Controller
         "filename" => $filename,
         "url" => $UploadS3->objectURL
       ];
-      if($acl == 'private'){
+      if ($acl == 'private') {
         $bucketUrl = "https://".$this->config->{$profile}->bucket.".s3.sa-east-1.amazonaws.com/";
         $path = str_replace($bucketUrl, "", $UploadS3->objectURL);
         $result->publicUrl = $UploadS3->getPrivateObjectS3($path);

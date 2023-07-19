@@ -13,13 +13,14 @@ class UploadS3
 
   private $messageError;
 
-  function __construct($config){
+  function __construct($config)
+  {
  		$this->config = $config;
 	}
 
-  public function setClient(){
-
-    if(empty(getenv("HOME"))){
+  public function setClient()
+  {
+    if (empty(getenv("HOME"))) {
       putenv('HOME=/home/'.get_current_user());
     }
 
@@ -30,17 +31,18 @@ class UploadS3
     ]);
   }
 
-  public function handleUploadFile($prefix = ""){
+  public function handleUploadFile($prefix = "")
+  {
     $response = (object)[];
-    if(is_array($_FILES) && count($_FILES) > 0){
-      foreach ($_FILES as $k => $item){
-
+  
+    if (is_array($_FILES) && count($_FILES) > 0) {
+      foreach ($_FILES as $k => $item) {
         $file = $item['tmp_name'];
         $filename = $item['name'];
 
         $file = is_array($file) ? $file[0] : $file ;
 
-        if(empty($file)){
+        if (empty($file)) {
           return (object)[
             "error" => "imageEmpty",
             "_files" => $_FILES
@@ -53,21 +55,21 @@ class UploadS3
           $prefix
         );
 
-        if($upload) {
+        if ($upload) {
           $response->{$k} = (object)
             [
               "url" => $this->objectURL,
               "id" => $filename,
               "_files" => $_FILES[$k]
           ];
-        }else{
+        } else {
           $response->{$k} = (object)[
             "error" => true,
             "message" => $this->messageError
           ];
         }
       }
-    }else{
+    } else {
       $response = (object)[
         "error" => true,
         "message" => "emptyFiles"
@@ -77,9 +79,8 @@ class UploadS3
     return $response;
   }
 
-
-  public function upload($sourceFile, $filename = "", $prefix = "", $acl = "public-read"){
-
+  public function upload($sourceFile, $filename = "", $prefix = "", $acl = "public-read")
+  {
     $this->setClient();
 
     $filename =
@@ -114,7 +115,8 @@ class UploadS3
     }
 	}
 
-  public function getPrivateObjectS3($file, $maxTime = '+1 minutes'){
+  public function getPrivateObjectS3($file, $maxTime = '+1 minutes')
+  {
     $this->setClient();
     $cmd = $this->s3Client->getCommand('GetObject', [
       'Bucket' => $this->config->bucket,

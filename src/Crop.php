@@ -20,19 +20,19 @@ class Crop
   {
     $exif = exif_read_data($url);
     
-    if ($image && $exif && isset($exif['Orientation'])){
+    if ($image && $exif && isset($exif['Orientation'])) {
       $orientation = $exif['Orientation'];
 
-      if ($orientation == 6 || $orientation == 5){
+      if ($orientation == 6 || $orientation == 5) {
         $image = imagerotate($image, 270, null);
       }
-      if ($orientation == 3 || $orientation == 4){
+      if ($orientation == 3 || $orientation == 4) {
         $image = imagerotate($image, 180, null);
       }
-      if ($orientation == 8 || $orientation == 7){
+      if ($orientation == 8 || $orientation == 7) {
         $image = imagerotate($image, 90, null);
       }
-      if ($orientation == 5 || $orientation == 4 || $orientation == 7){
+      if ($orientation == 5 || $orientation == 4 || $orientation == 7) {
         imageflip($image, IMG_FLIP_HORIZONTAL);
       }
     }
@@ -50,7 +50,7 @@ class Crop
     //image resource
     $image = $this->getImageResourceFromUrl($url);
     
-    if(function_exists('exif_read_data') && preg_match("/\.(jpe?g|jpg)$/i", $filename)){
+    if (function_exists('exif_read_data') && preg_match("/\.(jpe?g|jpg)$/i", $filename)) {
       $image = $this->exifReadData($url, $image);
     }
 
@@ -63,11 +63,12 @@ class Crop
     if (!empty($options['max_width'])) {
       $max_width = $options['max_width'];
     }
+
     if (!empty($options['max_height'])) {
       $max_height = $options['max_height'];
     }
     
-    if(!isset($options["cropModal"])){
+    if (!isset($options["cropModal"])) {
       $scale = min(
         $max_width / $img_width,
         $max_height / $img_height
@@ -83,7 +84,7 @@ class Crop
     //Initialize x and y source image
     $src_x = $src_y = 0;
 
-    if(isset($options["cropModal"])){
+    if (isset($options["cropModal"])) {
       $new_width  = $options["max_width"];
       $new_height = $options["max_height"];
       $new_img    = imagecreatetruecolor($new_width, $new_height);
@@ -96,7 +97,7 @@ class Crop
       $img_width  = $options["width"];
       $img_height = $options["height"];
 
-    }else{
+    } else {
       if (empty($options['crop'])) {
         $new_width = $img_width * $scale;
         $new_height = $img_height * $scale;
@@ -167,5 +168,4 @@ class Crop
 
     return $success;
   }
-
 }

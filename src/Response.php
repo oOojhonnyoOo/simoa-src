@@ -19,13 +19,11 @@ namespace Simoa;
 
 class Response
 {
-
   private $code = 200;
   private $data;
   public $success = true;
   public $response;
   public $errors = [];
-
 
   function __construct()
   {
@@ -52,6 +50,7 @@ class Response
         $this->response->log[] = $value;
         break;
     }
+
     return $this;
   }
 
@@ -64,6 +63,7 @@ class Response
     } else {
       $this->response->$k = $v;
     }
+
     return $this;
   }
 
@@ -99,5 +99,3 @@ class Response
     return json_encode($this);
   }
 }
-
-?>

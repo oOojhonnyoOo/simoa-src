@@ -57,7 +57,7 @@ class Counter
 
     $current = $this->getCurrentAndIncrement($last);
 
-    if(empty($current)){
+    if (empty($current)) {
       return false;
     }
 
@@ -69,16 +69,16 @@ class Counter
     $current = "";
     $i = 0;
 
-    do{
+    do {
       //open and lock file
       $handle = fopen($file, 'r+');
       $locked = flock($handle, LOCK_EX);
 
-      if($locked){
+      if ($locked) {
         $current = fgets($handle);
 
         //work with data
-        if( empty($current) ){
+        if (empty($current)) {
           continue;
         }
 
@@ -99,13 +99,12 @@ class Counter
         
         //close
         fclose($handle);
-      }else{
+      } else {
         usleep(1000);
         $i++;
       }
-    }while( !$locked  && $i <= $tries );
+    } while (!$locked  && $i <= $tries);
 
     return $current;
   }
-
 }

@@ -4,12 +4,6 @@ namespace Simoa;
 
 class TokenInfo
 {
-
-  function __construct()
-  {
-  }
-
-
   /**
    * filtra pelo map enviado separado por ponto
    */
@@ -25,17 +19,19 @@ class TokenInfo
   static function avaCursos($tokenData)
   {
     $cursos = [];
+
     if (isset($tokenData->extraInfo->ava->turmas)) {
       foreach ($tokenData->extraInfo->ava->turmas as $item) {
         $cursos[] = $item->curso;
       }
     }
+
     if (array_intersect(['root', 'ava/admin'], $tokenData->roles)) {
       $cursos[] = "*";
     }
 
-    foreach($tokenData->roles as $r){
-      if(preg_match("/ava\/(.*?)\/coordenador\-geral/", $r, $match)){
+    foreach ($tokenData->roles as $r) {
+      if (preg_match("/ava\/(.*?)\/coordenador\-geral/", $r, $match)) {
         $cursos[] = $match[1];
       }
     }

@@ -6,7 +6,6 @@ use Symfony\Component\Yaml\Yaml;
 
 class Info extends Module
 {
-
   // private $headers;
   private $yaml;
   var $module;

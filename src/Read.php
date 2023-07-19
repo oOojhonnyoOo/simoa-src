@@ -5,8 +5,8 @@ namespace Simoa;
 use Exception;
 use Error;
 
-class Read extends API{
-
+class Read extends API
+{
   public function __construct()
   {
     parent::__construct() ; 
@@ -23,7 +23,7 @@ class Read extends API{
       $matches
     );
     
-    if(empty($matches) || count($matches) < 3){
+    if (empty($matches) || count($matches) < 3) {
       die("service unknown");
     }
     
@@ -34,7 +34,7 @@ class Read extends API{
     $this->headers->asset = (isset($matches[3])) ? $matches[3] : "index";
 
     //read preview
-    if($matches[1] == "preview"){
+    if ($matches[1] == "preview") {
       $matches = explode("/", $request);
 
       $this->headers->site   = $matches[1];
@@ -65,11 +65,8 @@ class Read extends API{
         include($this->config->path . "/public/$m/".$asset.$ext);
         return true;
       }
-
     }
 
     return false;
   }
 }
-
-?>
