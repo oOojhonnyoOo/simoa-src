@@ -9,14 +9,16 @@ class API
 {
 
   public $class;
-  public $config;
-  public $response;
+  public Config $config;
+  public Response $response;
   public $headers;
   public $request;
 
   function __construct()
   {
-    define("CLI", false);
+    if (!defined("CLI")) {
+      define("CLI", false);
+    }
 
     $this->config = new Config();
     $this->response = new Response();
@@ -29,12 +31,12 @@ class API
 
     // load module configs 
     // this overrides site configs if they've got the same keys
-    $this->module();
+    $this->config->module($this->headers->module);
 
     // load method configs
     // this overides module configs
     // also, this avoid to overried 'data' sent in request.
-    $this->method();
+    $this->config->method($this->headers->method);
 
     $this->auth();
 
@@ -103,21 +105,12 @@ class API
     $this->request->contenttype = $ct;
   }
 
-  function module()
-  {
-    $this->config->module($this->headers->module);
-  }
-
-  function method()
-  {
-    $this->config->method($this->headers->method);
-  }
-
   function auth()
   {
     if (!isset($this->config->auth)) {
       return true;
     }
+
     if ($this->config->auth) {
       if (!isset($this->request->token)) {
         $this->response->addHttpHeader('WWW-Authenticate: Bearer error="invalid_token", error_description="The access token was not provided"');

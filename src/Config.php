@@ -58,7 +58,7 @@ class Config
     $this->preview = $this->path . "/preview";
     $this->data = $this->path . "/.simoa/.data";
     $this->history = $this->path . "/.simoa/.history";
-    $this->url = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : "";
+    $this->url = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : "";  
   }
 
   function env()

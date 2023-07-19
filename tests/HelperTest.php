@@ -8,6 +8,7 @@ use Simoa\Helper;
 
 final class HelperTest extends TestCase
 {
+  
   /**
    * @dataProvider rightRequestURIMethodProvider
    */

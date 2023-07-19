@@ -90,12 +90,14 @@ class Response
 
   function echo()
   {
-    // header('Content-Type: application/json; charset=utf-8');
     http_response_code($this->code);
     echo json_encode($this);
   }
+
   function __toString()
   {
     return json_encode($this);
   }
 }
+
+?>
