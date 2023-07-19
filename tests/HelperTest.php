@@ -37,6 +37,91 @@ final class HelperTest extends TestCase
     $this->assertFalse($result === $unexpectedResult, 'Test wrong values from RequestURI method');
   }
 
+  public function testEqual()
+  {
+      $this->assertTrue(Helper::compare(5, 5, "=="));
+  }
+
+  public function testIdentical()
+  {
+      $this->assertTrue(Helper::compare(5, 5, "==="));
+  }
+
+  public function testNonIdentical()
+  {
+      $this->assertFalse(Helper::compare(6, 5, "==="));
+  }
+
+  public function testGreaterThanOrEqual()
+  {
+      $this->assertTrue(Helper::compare(5, 3, ">="));
+  }
+
+  public function testNotGreaterThanOrEqual()
+  {
+      $this->assertFalse(Helper::compare(3, 5, ">="));
+  }
+
+  public function testLessThanOrEqual()
+  {
+      $this->assertTrue(Helper::compare(5, 5, "<="));
+  }
+
+  public function testNotLessThanOrEqual()
+  {
+      $this->assertFalse(Helper::compare(6, 5, "<="));
+  }
+
+  public function testLessThan()
+  {
+      $this->assertTrue(Helper::compare(3, 5, "<"));
+  }
+
+  public function testNotLessThan()
+  {
+      $this->assertFalse(Helper::compare(5, 3, "<"));
+  }
+
+  public function testGreaterThan()
+  {
+      $this->assertTrue(Helper::compare(5, 3, ">"));
+  }
+
+  public function testNotEqual()
+  {
+      $this->assertTrue(Helper::compare(5, 3, "!="));
+  }
+
+  public function testNotIdentical()
+  {
+      $this->assertTrue(Helper::compare(5, "5", "!=="));
+  }
+
+  public function testInArray()
+  {
+      $this->assertTrue(Helper::compare(2, [1, 2, 3], "in"));
+  }
+
+  public function testErrorInArray()
+  {
+      $this->assertFalse(Helper::compare(5, [1, 2, 3], "in"));
+  }
+
+  public function testNotInArray()
+  {
+      $this->assertTrue(Helper::compare(4, [1, 2, 3], "out"));
+  }
+
+  public function testErrorNotInArray()
+  {
+      $this->assertFalse(Helper::compare(2, [1, 2, 3], "out"));
+  }
+
+  public function testInvalidComparison()
+  {
+      $this->assertFalse(Helper::compare(5, 5, "invalid"));
+  }
+
   public function rightRequestURIMethodProvider(): array
   {
     return [

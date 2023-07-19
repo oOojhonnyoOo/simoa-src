@@ -3,6 +3,7 @@
 namespace Simoa;
 
 use \Firebase\JWT\JWT;
+use Simoa\Helper;
 
 class Token
 {
@@ -246,7 +247,7 @@ class Token
 
       $val1 = $this->parseValue($API, $path1, $class);
       $val2 = $this->parseValue($API, $path2, $class);
-      $compareResult = compare($val1, $val2, $operator);
+      $compareResult = Helper::compare($val1, $val2, $operator);
       if (!$compareResult) {
         $result->success = false;
         $result->errors[] = "error:$labelOnError";

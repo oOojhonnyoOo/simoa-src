@@ -58,25 +58,4 @@ class SiteAPI
     }
     return $decoded;
   }
-
-
-
-
-
-  // $Curl = new Simoa\Curl();
-  // $login = json_decode($Curl->exec(
-  //   "curl -k --location --request GET 'https://ava-nda2.simoa.dev:8300/check_password/?cpf={$this->data->cpf}&password={$this->data->password}' \
-  //   --header 'token: abc321'")
-  // );
-
-  // $url = $this->config->server->$site."/api/$site/users/tokenInfo";
-
-  // //url: http://ava.conasems.local:8204
-  // $curlString = "curl --location --request POST '".$url."' \
-  // --header 'token: ".$token."' \
-  // --header 'Content-Type: application/json' \
-  // --data-raw '{
-  //     \"data\": {}
-  // }'" ;
-  // $result = shell_exec($curlString) ;
 }

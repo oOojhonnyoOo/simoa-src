@@ -86,14 +86,6 @@ class Search
     }
   }
 
-  // function fq(){
-  //   if(isset($_GET['fq']) && !empty($_GET['fq'])){
-  //     $this->fq = $_GET['fq']." AND ".$this->fq;
-  //   } else {
-  //     $this->fq = $this->fq;
-  //   }
-  // }
-
   function fl()
   {
     if (isset($_GET['fl']) && !empty($_GET['fl'])) {
@@ -215,11 +207,8 @@ class Search
 
 
     if (isset($this->fq) && !empty($this->fq)) {
-      // if(isset($_GET['fq'])){
       $fq = "";
 
-      // &fq[foo]=bar
-      // &fq[fu]=ba
       if (is_array($this->fq)) {
         foreach ($this->fq as $k => $v) {
           if ($this->hint) {
@@ -274,17 +263,10 @@ class Search
     if ($this->start !== null) {
       $Solr->start = $this->start;
     }
-    // if(isset($_GET['start'])){
-    //   $Solr->start = $_GET['start'];
-    // }
 
     if ($this->rows !== null) {
       $Solr->rows = $this->rows;
     }
-
-    // if(isset($_GET['rows'])){
-    //   $Solr->rows = $_GET['rows'];
-    // }
 
     if (isset($this->fl) && !empty($this->fl)) {
       $Solr->fl = $this->fl;
@@ -334,19 +316,6 @@ class Search
     if (isset($props->rows)) {
       $Solr->rows = $props->rows;
     }
-
-
-
-    // $query = $Solr->query();
-    // if($Solr->group == 'true'){
-    //   $response = $query->grouped;
-    // } else {
-    //   $response = $query->response;
-    // }
-    // return $response;
-
-    // debugg($Solr);
-    // exit;
 
     $result = $Solr->query();
     $this->reset();

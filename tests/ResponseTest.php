@@ -30,35 +30,21 @@ class ResponseTest extends TestCase
     $this->assertEquals('{"name":"John"}', json_encode($response->response));
   }
 
-  // public function testAddHttpHeader()
-  // {
-  //   $response = new \Simoa\Response();
+  public function testErrors()
+  {
+    $response = new \Simoa\Response();
+    $response->errors(['field1' => 'Error message 1', 'field2' => 'Error message 2']);
 
-  //   ob_start();
-  //   $response->addHttpHeader('Content-Type: application/json');
-  //   $headers = xdebug_get_headers();
-  //   ob_end_clean();
+    $this->assertFalse($response->success);
+    $this->assertEquals(['field1' => 'Error message 1', 'field2' => 'Error message 2'], $response->errors);
+  }
 
-  //   $this->assertContains('Content-Type: application/json', $headers);
-  // }
+  public function testError()
+  {
+    $response = new \Simoa\Response();
+    $response->error('Error message');
 
-  // public function testErrors()
-  // {
-  //   $response = new \Simoa\Response();
-  //   $response->errors(['field1' => 'Error message 1', 'field2' => 'Error message 2']);
-
-  //   $this->assertFalse($response->success);
-  //   $this->assertEquals(['field1' => 'Error message 1', 'field2' => 'Error message 2'], $response->errors);
-  //   $this->assertEquals(200, $response->code);
-  // }
-
-  // public function testError()
-  // {
-  //   $response = new \Simoa\Response();
-  //   $response->error('Error message');
-
-  //   $this->assertFalse($response->success);
-  //   $this->assertEquals(['Error message'], $response->errors);
-  //   $this->assertEquals(200, $response->code);
-  // }
+    $this->assertFalse($response->success);
+    $this->assertEquals(['Error message'], $response->errors);
+  }
 }

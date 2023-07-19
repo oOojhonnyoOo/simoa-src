@@ -863,31 +863,6 @@ abstract class Controller
     ]);
   }
 
-  // private function next(){
-  //   $doc = new Solr\Document($this->config->solr->default);
-
-  //   $s = $this->headers->site;
-  //   $m = $this->headers->module;
-
-  //   $solrId = "_counter/$s/$m/last";
-
-  //   $doc->addField("site", "_counter_site");
-  //   $doc->addField("module", "_counter_module");
-  //   $doc->addField("id", "last");
-  //   $doc->addField("solrId", $solrId);
-  //   $doc->addField("_counter_site", $s);
-  //   $doc->addField("_counter_module", $m);
-  //   $doc->addField('_counter_last', (object)["inc" => 1]);
-
-  //   $this->debugg = $doc->commit();
-
-  //   $Solr = new Solr\Query($this->config->solr->default);
-  //   $Solr->q = "solrId:$solrId";
-  //   $Solr->rows = 1;
-
-  //   return $Solr->query()->response->docs[0]->_counter_last;
-  // }
-
   // filter fields in response according to config
   // object can be either: $query OR $query->response from solr
   function filter($o)

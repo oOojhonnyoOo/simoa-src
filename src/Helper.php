@@ -25,6 +25,38 @@ class Helper
 
     return $headers;    
   }
+
+  public static function compare($value1, $value2, $operator = "==")
+  {
+    switch ($operator) {
+      case "==":
+          return $value1 == $value2;
+      case "===":
+          return $value1 === $value2;
+      case ">=":
+          return $value1 >= $value2;
+      case "<=":
+          return $value1 <= $value2;
+      case "<":
+          return $value1 < $value2;
+      case ">":
+          return $value1 > $value2;
+      case "!=":
+          return $value1 != $value2;
+      case "!==":
+          return $value1 !== $value2;
+      default:
+          $operator = strtolower($operator);
+          if ($operator == "in" || $operator == "out") {
+              $value1 = is_array($value1) ? $value1 : [$value1];
+              $value2 = is_array($value2) ? $value2 : [$value2];
+              $intersection = array_intersect($value1, $value2);
+              return ($operator == "in") ? (count($intersection) > 0) : (count($intersection) === 0);
+          }
+          return false;
+    }
+  }  
+
 }
 
 function object($array, $associative = false)
@@ -795,42 +827,6 @@ function filterData($data, $path = "", $itemFilter = null)
     $current = _filterItem($current, $prop);
   }
   return filterData($current, null, $itemFilter);
-}
-
-function compare($val1, $val2, $simble = "==")
-{
-  if ($simble == "==") {
-    return $val1 == $val2;
-  }
-  if ($simble == "===") {
-    return $val1 === $val2;
-  }
-  if ($simble == ">=") {
-    return $val1 >= $val2;
-  }
-  if ($simble == "<=") {
-    return $val1 <= $val2;
-  }
-  if ($simble == "<") {
-    return $val1 < $val2;
-  }
-  if ($simble == ">") {
-    return $val1 > $val2;
-  }
-  if ($simble == "!=") {
-    return $val1 != $val2;
-  }
-  if ($simble == "!==") {
-    return $val1 !== $val2;
-  }
-  $simble = strtolower($simble);
-  if ($simble == "in" || $simble == "out") {
-    $v1 = is_array($val1) ? $val1 : [$val1];
-    $v2 = is_array($val2) ? $val2 : [$val2];
-    $total = array_intersect($v1, $v2);
-    return ($simble == "in") ? (count($total) > 0) : (count($total) == 0);
-  }
-  return false;
 }
 
 /**
