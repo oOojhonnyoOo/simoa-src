@@ -2,8 +2,8 @@
 
 namespace Simoa;
 
-class SolrProxy{
-
+class SolrProxy
+{
   /**
    * $core (string) - solr core name
    */
@@ -21,10 +21,10 @@ class SolrProxy{
    */
   public function request()
   {
-    if($this->checkAPIKey()){
+    if ($this->checkAPIKey()) {
       $q = $_SERVER['QUERY_STRING'];
       echo file_get_contents($this->config->solr->{$this->core} . "/select/?" . $q);
-    }else{
+    } else {
       $this->response->error('forbidden',403);
       $this->response->echo();
     }
@@ -56,5 +56,4 @@ class SolrProxy{
  
     return ( !empty($headers["key"]) && $headers["key"] == $this->config->keys->publicsolr );
   }
-
 }

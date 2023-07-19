@@ -7,7 +7,6 @@ use Error;
 
 class API
 {
-
   public $class;
   public Config $config;
   public Response $response;

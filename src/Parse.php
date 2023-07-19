@@ -4,7 +4,6 @@ namespace Simoa;
 
 class Parse
 {
-
   var $hasErrors = false;
   var $errors = [];
   var $Index;
@@ -40,6 +39,7 @@ class Parse
         $schema = $this->config->$method->data;
       }
     }
+
     return $schema;
   }
 
@@ -65,7 +65,7 @@ class Parse
   function _array($key, $value, $parent)
   {
     $_key = str_replace('[{}]', '', $key);
-    if(isset($this->data->{$_key})){
+    if (isset($this->data->{$_key})) {
       for ($i = 0; $i < count($this->data->$_key); $i++) {
         foreach ($value as $k => $v) {
           $this->_string($k, $v, $_key, $i);
@@ -358,6 +358,7 @@ class Parse
         $this->data->$p->$k = $value;
       }
     }
+    
     return true;
   }
 }

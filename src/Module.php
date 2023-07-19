@@ -4,7 +4,6 @@ namespace Simoa;
 
 class Module extends Controller
 {
-
   var $config;
   var $headers;
   var $data;
@@ -17,7 +16,6 @@ class Module extends Controller
   // (object) $API  OR  (string) $module
   function __construct($init = null)
   {
-
     if ($init === null) {
       preg_match('/\w+\\\\(\w+)/', get_called_class(), $matches);
       if (count($matches) > 1) {
@@ -151,7 +149,6 @@ class Module extends Controller
         }
       }
     }
-
 
     return $this->response->add('API', $methods);
   }

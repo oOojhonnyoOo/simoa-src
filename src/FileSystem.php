@@ -4,7 +4,6 @@ namespace Simoa;
 
 class FileSystem
 {
-
   var $mode = 'w+';
   var $path; // /path/to/data/site/module
   var $filename; // site/module/file.json
@@ -64,7 +63,6 @@ class FileSystem
 
   function csvSave()
   {
-
     $Csv = new Csv();
     return $Csv->addDataAsLine($this->data, $this->file);
   }
@@ -82,12 +80,12 @@ class FileSystem
     $tries = 100;
     $success = false;
 
-    do{
+    do {
       //open and lock file
       $handle = fopen($this->file, $this->mode);
       $locked = flock($handle, LOCK_EX);
 
-      if($locked){
+      if ($locked) {
         
         //truncate file
         ftruncate($handle, 0);
@@ -106,11 +104,11 @@ class FileSystem
         
         //close file
         fclose($handle);
-      }else{
+      } else {
         usleep(1000);
         $i++;
       }
-    }while( !$locked  && $i <= $tries );
+    } while (!$locked  && $i <= $tries);
 
     return $success;
   }
@@ -205,9 +203,11 @@ class FileSystem
   {
     preg_match('/(\S+\/)/', $this->filename, $matches);
     $history = $this->config->history . "/" . $matches[1] . $this->headers->id;
+    
     if (!file_exists($history)) {
       mkdir($history, 0755, true);
     }
+
     $this->history = $history;
   }
 
@@ -223,10 +223,12 @@ class FileSystem
       $this->mode = $mode;
       return true;
     }
+
     if (isset($this->config->formats->mode)) {
       $this->mode = $this->config->formats->mode;
       return true;
     }
+
     return true;
   }
 }

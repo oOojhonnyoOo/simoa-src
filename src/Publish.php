@@ -2,14 +2,15 @@
 
 namespace Simoa;
 
-class Publish{
-
-  function __controller(){
+class Publish
+{
+  function __controller()
+  {
 
   }
 
-  function templateCache(){
+  function templateCache()
+  {
     
   }
-
 }

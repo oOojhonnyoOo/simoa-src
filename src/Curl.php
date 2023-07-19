@@ -23,13 +23,11 @@ namespace Simoa;
 
 class Curl
 {
-
   var $url;
   var $request = 'POST';
   var $props = ['-k'];
   var $headers = [];
   var $dataRaw;
-
 
   function __construct($options = [])
   {

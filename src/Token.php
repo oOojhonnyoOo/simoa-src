@@ -18,6 +18,7 @@ class Token
   {
     $this->config = $config;
   }
+
   protected function hashString($str)
   {
     return hash_hmac(
@@ -26,25 +27,32 @@ class Token
       $this->config->keys->default
     );
   }
+
   protected function getExtraInfo($tokenId)
   {
     if (!$tokenId) {
       return [];
     }
+
     $hashedToken = $this->hashString($tokenId);
     //server cached info
     $url = $this->config->server->conta . "/token/$hashedToken.json";
+
     return getUrlContent($url, []);
   }
+
   function populateExtraInfo()
   {
     $dataToken = $this->getExtraInfo(filterData($this->data, "data.tokenId"));
     $this->data->data->extraInfo = [];
+
     if ($dataToken && isset($dataToken->extraInfo)) {
       $this->data->data->extraInfo = $dataToken->extraInfo;
     }
+
     return true;
   }
+
   function gen($data)
   {
     $this->data = $data;
@@ -65,9 +73,11 @@ class Token
         'fullname' => $this->data->fullname
       ]
     ];
+
     if (isset($this->data->tokenId)) {
       $array['data']['tokenId'] = $this->data->id;
     }
+    
     return JWT::encode(
       $array,
       $this->config->keys->token
@@ -129,6 +139,7 @@ class Token
           return $d;
         }
       }
+
       return null;
     });
 
@@ -136,6 +147,7 @@ class Token
       //não tem permissão dentre os tipos objeto tb
       return false;
     }
+
     return true;
   }
 
@@ -159,6 +171,7 @@ class Token
       if (!is_string($p)) {
         continue;
       }
+
       if (strpos($p, "/*/") !== false) {
         $a = explode('/', $p);
         $s = $a[0];
@@ -196,6 +209,7 @@ class Token
         }
       }
     }
+
     return $valResult;
   }
 
@@ -253,6 +267,7 @@ class Token
         $result->errors[] = "error:$labelOnError";
       }
     }
+    
     return $result;
   }
 
