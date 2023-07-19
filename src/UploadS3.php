@@ -13,7 +13,8 @@ class UploadS3
 
   private $messageError;
 
-  function __construct($config){
+  function __construct($config)
+  {
  		$this->config = $config;
 	}
 

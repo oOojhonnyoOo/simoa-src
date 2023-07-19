@@ -97,7 +97,7 @@ class Crop
       $img_width  = $options["width"];
       $img_height = $options["height"];
 
-    }else{
+    } else {
       if (empty($options['crop'])) {
         $new_width = $img_width * $scale;
         $new_height = $img_height * $scale;

@@ -10,7 +10,8 @@ class File
   var $extension;
   var $file;
 
-  function __construct($props){
+  function __construct($props)
+  {
     foreach ($props as $k => $v) {
       $this->$k = $v;
     }
@@ -18,7 +19,8 @@ class File
     $this->fetchFromFile();
   }
 
-  function fetchFromFile(){
+  function fetchFromFile()
+  {
     if (!empty($this->file)) {
       preg_match('/(.+\/)(\w+).(\w{3})/', $this->file, $matches);
 

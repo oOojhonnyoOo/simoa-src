@@ -41,7 +41,8 @@ class Cli
     }
   }
 
-  function fetch($cmd){
+  function fetch($cmd)
+  {
     preg_match('/(\\\\?\w+?\\\\?\w+)\.?(\w+)\((.+)?\)/', $cmd, $matches);
     $pos = strpos($matches[1], '\\');
     if ($pos) {
@@ -59,7 +60,7 @@ class Cli
     $this->method = trim($matches[2]);
 
     if (isset($matches[3])) {
-      foreach(explode(",", $matches[3]) as $param){
+      foreach (explode(",", $matches[3]) as $param) {
         $this->params[] = trim($param);
       }
     }
