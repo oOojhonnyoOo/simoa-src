@@ -1,0 +1,31 @@
+name: Run PHPUnit and Upload Coverage to Codecov
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Run PHPUnit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4' 
+
+      - name: Install dependencies
+        run: composer install
+
+      - name: Run PHPUnit tests
+        run: vendor/bin/phpunit --coverage-clover=coverage.xml
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: c2fe78da-423c-4adc-a7f2-9a9f0757fa86
