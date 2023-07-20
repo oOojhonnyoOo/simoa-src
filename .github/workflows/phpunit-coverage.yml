@@ -1,4 +1,4 @@
-name: Run PHPUnit and Upload Coverage to Codecov
+name: Unit tests
 
 on:
   push:
