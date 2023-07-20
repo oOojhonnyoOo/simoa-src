@@ -2,3 +2,4 @@ vendor
 .phpunit.result.cache
 coverage_report
 .DS_Store
+coverage.xml
