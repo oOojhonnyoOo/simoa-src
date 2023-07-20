@@ -4,10 +4,12 @@ namespace Simoa;
 
 class TemplateCache
 {
-  var $mode = 'w+';
-  var $url;
-  var $cache;
-  var $asset;
+  public $mode = 'w+';
+  public $url;
+  public $cache;
+  public $asset;
+  public $uniqueId;
+  public $filename;
 
   function __construct($object)
   {
