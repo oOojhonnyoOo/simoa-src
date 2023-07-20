@@ -2,7 +2,8 @@
 
 namespace Simoa;
 
-class TemplateCache{
+class TemplateCache
+{
   var $mode = 'w+';
   var $url;
   var $cache;

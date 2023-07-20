@@ -4,7 +4,7 @@ namespace Simoa;
 
 class Csv
 {
-  var $delimiter = ',';
+  public $delimiter = ',';
 
   function addDataAsLine($data, $file)
   {
