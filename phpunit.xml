@@ -6,8 +6,11 @@
 >
     <coverage processUncoveredFiles="true">
         <include>
-            <directory suffix=".php">./app</directory>
+            <directory>src</directory>
         </include>
+        <exclude>
+            <directory>tests</directory>
+        </exclude>
     </coverage>
     <php>
         <server name="APP_ENV" value="testing"/>

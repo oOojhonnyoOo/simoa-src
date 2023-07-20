@@ -9,6 +9,7 @@
     ],
     "homepage": "https://www.google.com.br",
     "license": "GPL-3.0-or-later",
+    "minimum-stability": "dev",
     "repositories": [
         {
             "type": "vcs",
@@ -25,6 +26,8 @@
     },
     "require": {
         "psr/http-message": "^2.0",
-        "symfony/yaml": "^6.3"
+        "symfony/yaml": "^6.3",
+        "mantoani/cli": "*",
+        "mantoani/solr": "*"
     }
 }
