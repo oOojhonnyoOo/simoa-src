@@ -5,7 +5,7 @@ namespace Tests;
 use PHPUnit\Framework\TestCase;
 use Simoa\TemplateCache;
 
-class TemplateCacheTest extends TestCase
+final class TemplateCacheTest extends TestCase
 {
     public function testVarsWithValidHeaders()
     {

@@ -5,7 +5,7 @@ namespace Tests;
 use PHPUnit\Framework\TestCase;
 use Simoa\Search;
 
-class SearchTest extends TestCase
+final class SearchTest extends TestCase
 {
     public function testReset()
     {

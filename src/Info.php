@@ -9,6 +9,7 @@ class Info extends Module
   // private $headers;
   private $yaml;
   var $module;
+  public $path;
 
   function __construct($API)
   {
@@ -19,7 +20,7 @@ class Info extends Module
 
   function init()
   {
-    $this->path = dirname(__DIR__, 3);
+    $this->path = getenv("PATH_FOLDER") ?? dirname(__DIR__, 3);
   }
 
   function default()

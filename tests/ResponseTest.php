@@ -4,7 +4,7 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 
-class ResponseTest extends TestCase
+final class ResponseTest extends TestCase
 {
   public function testLogWithObject()
   {

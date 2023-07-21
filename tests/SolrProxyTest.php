@@ -12,7 +12,7 @@ class SolrProxyTest extends TestCase
 
         ob_start();
         $solrProxy->request();
-        $output = ob_get_clean();
+        ob_get_clean();
 
         $this->expectOutputString('');
     }

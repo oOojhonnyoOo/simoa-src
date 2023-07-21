@@ -5,7 +5,7 @@ namespace Tests;
 use PHPUnit\Framework\TestCase;
 use Simoa\Csv;
 
-class CsvTest extends TestCase
+final class CsvTest extends TestCase
 {
     private $tempDir;
 

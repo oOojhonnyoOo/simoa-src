@@ -5,7 +5,7 @@ namespace Tests;
 use PHPUnit\Framework\TestCase;
 use Simoa\Counter;
 
-class CounterTest extends TestCase
+final class CounterTest extends TestCase
 {
     private $tempDir;
 

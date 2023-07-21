@@ -3,7 +3,7 @@
 use PHPUnit\Framework\TestCase;
 use Simoa\TokenInfo;
 
-class TokenInfoTest extends TestCase
+final class TokenInfoTest extends TestCase
 {
     public function testAvaCursos()
     {
@@ -28,4 +28,28 @@ class TokenInfoTest extends TestCase
 
         $this->assertCount(3, $cursos);
     }
+
+    // public function testFilterWithAllowRoles()
+    // {
+    //     $data = (object) ['field1' => 'value1', 'field2' => 'value2', 'roles' => ['root']];
+    //     $map = ['field1' => 'filter1', 'field2' => 'filter2'];
+
+    //     $result = (new TokenInfo())->filter($data, $map, ['root']);
+
+    //     $expectedResult = ['filtered data based on filter1', 'filtered data based on filter2', '*'];
+
+    //     $this->assertEquals($expectedResult, $result);
+    // }
+
+    // public function testFilterWithoutAllowRoles()
+    // {
+    //     $data = (object) ['field1' => 'value1', 'field2' => 'value2', 'roles' => ['guest']];
+    //     $map = ['field1' => 'filter1', 'field2' => 'filter2'];
+
+    //     $result = (new TokenInfo())->filter($data, $map);
+
+    //     $expectedResult = ['filtered data based on filter1', 'filtered data based on filter2'];
+
+    //     $this->assertEquals($expectedResult, $result);
+    // }
 }

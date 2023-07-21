@@ -6,7 +6,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class Config
 {
-  private $yaml;
+  public $yaml;
   public $module;
 
   public string $path;
