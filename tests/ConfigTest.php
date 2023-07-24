@@ -2,46 +2,68 @@
 
 use PHPUnit\Framework\TestCase;
 use Simoa\Config;
+use Symfony\Component\Yaml\Yaml;
 
 final class ConfigTest extends TestCase
 {
+    private readonly Config $config;
+
+    public function setUp(): void
+    {
+        $this->config = new Config();   
+    }
+
     public function testDefaultInitValues()
     {
-        $config = new Config();
-
-        $this->assertSame($config->path, getenv("PATH_FOLDER"));
-        $this->assertSame($config->public, $config->path . "/public");
-        $this->assertSame($config->private, $config->path . "/private");
-        $this->assertSame($config->preview, $config->path . "/preview");
-        $this->assertSame($config->data, $config->path . "/.simoa/.data");
-        $this->assertSame($config->history, $config->path . "/.simoa/.history");
+        $this->assertSame($this->config->path, getenv("PATH_FOLDER"));
+        $this->assertSame($this->config->public, $this->config->path . "/public");
+        $this->assertSame($this->config->private, $this->config->path . "/private");
+        $this->assertSame($this->config->preview, $this->config->path . "/preview");
+        $this->assertSame($this->config->data, $this->config->path . "/.simoa/.data");
+        $this->assertSame($this->config->history, $this->config->path . "/.simoa/.history");
     }
 
     public function testServerAttributeWithTestEnv() 
     {
-        $config = new Config();
-        $env = trim(file_get_contents($config->path . "/.env"));
+        $env = trim(file_get_contents($this->config->path . "/.env"));
 
-        $this->assertSame($config->server, $config->env->$env->server);
+        $this->assertSame($this->config->server, $this->config->env->$env->server);
     }
-
 
     public function testClientAttributeWithTestEnv() 
     {
-        $config = new Config();
-        $env = trim(file_get_contents($config->path . "/.env"));
-        
-        $this->assertSame($config->client, $config->env->$env->client);
-    }
+        $env = trim(file_get_contents($this->config->path . "/.env"));
 
+        $this->assertSame($this->config->client, $this->config->env->$env->client);
+    }
 
     public function testGetDefaultSolr() 
     {
-        $config = new Config();
-
         $this->assertSame(
-            $config->__defaultSolr(), 
-            $config->yaml->default->solr
+            $this->config->__defaultSolr(), 
+            $this->config->yaml->default->solr
         );
+    }
+
+    public function testYamlHasFormatsAttribute()
+    {
+        $yaml = Yaml::parseFile(
+            $this->config->path . '/config.yml',
+            Yaml::PARSE_OBJECT_FOR_MAP
+        );
+
+        $this->assertObjectHasAttribute('formats', $yaml->default);
+    }
+    
+    public function testYamlNotHasFormatsAttribute()
+    {
+        $yaml = Yaml::parseFile(
+            $this->config->path . '/config.yml',
+            Yaml::PARSE_OBJECT_FOR_MAP
+        );
+
+        unset($yaml->default->formats);
+
+        $this->assertObjectNotHasAttribute('formats', $yaml->default);
     }
 }
