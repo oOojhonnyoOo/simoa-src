@@ -4,4 +4,3 @@
 
 
 ./vendor/bin/phpunit tests
- 
