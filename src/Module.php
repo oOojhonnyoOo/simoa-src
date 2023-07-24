@@ -43,13 +43,13 @@ class Module extends Controller
       $result = parent::save();
       // campo é readOnly e não veio na request OU foi criado id e não está no slug enviado.
       if (!isset($this->data->slug) || $result->success && !preg_match('/^\d+?_/', $this->data->slug)) {
-        $slug = slugify($this->data->title);
+        $slug = Helper::slugify($this->data->title);
         $this->data->slug = "{$result->response->id}_{$slug}";
       }
     }
 
     if (!isset($this->data->slug) || empty($this->data->slug)) {
-      $slug = slugify($this->data->title);
+      $slug = Helper::slugify($this->data->title);
       $this->data->slug = "{$this->data->id}_{$slug}";
     }
   }

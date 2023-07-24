@@ -43,7 +43,7 @@ class Token
 
   function populateExtraInfo()
   {
-    $dataToken = $this->getExtraInfo(filterData($this->data, "data.tokenId"));
+    $dataToken = $this->getExtraInfo(Helper::filterData($this->data, "data.tokenId"));
     $this->data->data->extraInfo = [];
 
     if ($dataToken && isset($dataToken->extraInfo)) {
@@ -130,7 +130,7 @@ class Token
       return true;
     }
 
-    $allows = filterData($this->objAllows, "role", function ($d) {
+    $allows = Helper::filterData($this->objAllows, "role", function ($d) {
       //transforma o que veio em um regex para que o asterisco sirva pra qualquer curso
       $allowRegex = "|" . str_replace("/", "\/", str_replace("*", "[0-9a-zA-Z_-]+?", $d)) . "|";
 
@@ -195,16 +195,16 @@ class Token
 
   protected function parseValue($API, $path, $class)
   {
-    $valResult = filterData($API, $path);
+    $valResult = Helper::filterData($API, $path);
 
     if (empty($valResult)) {
-      $valResult = parseValue($path);
+      $valResult = Helper::parseValue($path);
       if ($valResult == $path) {
         if (preg_match("/([a-zA-Z0-9_]+\(\))\.?([a-zA-Z0-9_.]*)/i", $path, $matchMethod)) {
           $m = str_replace("()", "", $matchMethod[1]);
           $valResult = call_user_func_array(array($class, $m), array());
           if (isset($matchMethod[2]) && !empty($matchMethod[2])) {
-            $valResult = filterData($valResult, $matchMethod[2]);
+            $valResult = Helper::filterData($valResult, $matchMethod[2]);
           }
         }
       }
@@ -231,7 +231,7 @@ class Token
     }
     $this->parseAllows();
     //verificando se tem dados a se comparar 
-    $allowRules = filterData($this->objAllows, "rules", function ($d) {
+    $allowRules = Helper::filterData($this->objAllows, "rules", function ($d) {
       return ($d != "") ? $d : null;
     });
 

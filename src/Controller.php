@@ -1151,7 +1151,7 @@ abstract class Controller
       $extension = $ext[0];
 
       $filename = preg_replace('/\.([0-9a-z]+$)/i', '', $filename);
-      $filename = slugify($filename) . '-' . time() . $extension;
+      $filename = Helper::slugify($filename) . '-' . time() . $extension;
 
       //add to files
       $_FILES[$key]['name'] = $filename;
@@ -1222,7 +1222,7 @@ abstract class Controller
       $extension = $ext[0];
 
       $filename = preg_replace('/\.([0-9a-z]+$)/i', '', $filename);
-      $filename = slugify($filename) . '-' . time() . $extension;
+      $filename = Helper::slugify($filename) . '-' . time() . $extension;
     }
 
     $_FILES[$key]['name'] = $filename;
@@ -1331,7 +1331,7 @@ abstract class Controller
       }
 
       $filename = preg_replace('/\.([0-9a-z]+$)/i', '', $filename);
-      $foldername = slugify($filename) . '-' . time();
+      $foldername = Helper::slugify($filename) . '-' . time();
     }
 
     $_FILES[$key]['name'] = $filename;

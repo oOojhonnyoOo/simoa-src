@@ -9,7 +9,7 @@ class TokenInfo
    */
   static function filter($data, $map, $allowRoles = ['root', 'ava/admin'])
   {
-    $return = filterData($data, $map);
+    $return = Helper::filterData($data, $map);
     if (array_intersect($allowRoles, $data->roles)) {
       $return[] = "*";
     }
