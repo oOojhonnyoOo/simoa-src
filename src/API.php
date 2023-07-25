@@ -15,45 +15,58 @@ class API
 
   function __construct()
   {
-    if (!defined("CLI")) {
-      define("CLI", false);
-    }
-
-    $this->config = new Config();
     $this->response = new Response();
 
-    // site/module/method
-    $this->getRequest();
+    try {
 
-    // http request headers
-    $this->request();
+      if (!defined("CLI")) {
+        define("CLI", false);
+      }
 
-    // load module configs 
-    // this overrides site configs if they've got the same keys
-    $this->config->module($this->headers->module);
+      $this->config = new Config();
 
-    // load method configs
-    // this overides module configs
-    // also, this avoid to overried 'data' sent in request.
-    $this->config->method($this->headers->method);
+      // site/module/method
+      $this->getRequest();
 
-    $this->auth();
+      // http request headers
+      $this->request();
 
-    // ecosystem call
-    $this->system();
+      // load module configs 
+      // this overrides site configs if they've got the same keys
+      $this->config->module($this->headers->module);
 
-    // data parser
-    $this->data();
+      // load method configs
+      // this overides module configs
+      // also, this avoid to overried 'data' sent in request.
+      $this->config->method($this->headers->method);
 
-    // parse data: validate, set indexing fields
-    $this->parse();
+      $this->auth();
 
-    //parsing class info
-    $this->parseClass();
+      // ecosystem call
+      $this->system();
 
-    //auth based in content data
-    $this->contentAuth();
+      // data parser
+      $this->data();
+
+      // parse data: validate, set indexing fields
+      $this->parse();
+
+      //parsing class info
+      $this->parseClass();
+
+      //auth based in content data
+      $this->contentAuth();
+
+    } catch (\Throwable $ex) {
+      $this->response->error('Erro interno do sistema, contate o suporte.', 400);
+      $this->response->add('message', $ex->getMessage());
+      $this->response->add('file', $ex->getFile());
+      $this->response->add('line', $ex->getLine());
+      $this->response->echo();
+      exit;
+    }
   }
+
 
   function getRequest()
   {
