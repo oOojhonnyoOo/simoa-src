@@ -7,124 +7,124 @@ use Simoa\Csv;
 
 final class CsvTest extends TestCase
 {
-    private $tempDir;
+  private $tempDir;
 
-    protected function setUp(): void
-    {
-        $this->tempDir = sys_get_temp_dir() . '/csv_test';
-        mkdir($this->tempDir, 0755);
+  protected function setUp(): void
+  {
+    $this->tempDir = sys_get_temp_dir() . '/csv_test';
+    mkdir($this->tempDir, 0755);
+  }
+
+  protected function tearDown(): void
+  {
+    $this->deleteDirectory($this->tempDir);
+  }
+
+  private function deleteDirectory($dir)
+  {
+    if (!file_exists($dir)) {
+      return;
     }
 
-    protected function tearDown(): void
-    {
-        $this->deleteDirectory($this->tempDir);
+    foreach (scandir($dir) as $item) {
+      if ($item === '.' || $item === '..') {
+        continue;
+      }
+      $path = $dir . '/' . $item;
+      if (is_dir($path)) {
+        $this->deleteDirectory($path);
+      } else {
+        unlink($path);
+      }
     }
+    rmdir($dir);
+  }
 
-    private function deleteDirectory($dir)
-    {
-        if (!file_exists($dir)) {
-            return;
-        }
+  public function testAddDataAsLine()
+  {
+    $data = [
+      'name' => 'John Doe',
+      'email' => 'john.doe@example.com',
+      'age' => 30,
+    ];
 
-        foreach (scandir($dir) as $item) {
-            if ($item === '.' || $item === '..') {
-                continue;
-            }
-            $path = $dir . '/' . $item;
-            if (is_dir($path)) {
-                $this->deleteDirectory($path);
-            } else {
-                unlink($path);
-            }
-        }
-        rmdir($dir);
-    }
+    $file = $this->tempDir . '/test.csv';
+    $csv = new Csv();
 
-    public function testAddDataAsLine()
-    {
-        $data = [
-            'name' => 'John Doe',
-            'email' => 'john.doe@example.com',
-            'age' => 30,
-        ];
+    $result = $csv->addDataAsLine($data, $file);
 
-        $file = $this->tempDir . '/test.csv';
-        $csv = new Csv();
+    $this->assertTrue($result);
 
-        $result = $csv->addDataAsLine($data, $file);
+    $expectedContent = "name,email,age\n" . '"John Doe"' . ",john.doe@example.com,30\n";
+    $actualContent = file_get_contents($file);
+    $this->assertEquals($expectedContent, $actualContent);
+  }
 
-        $this->assertTrue($result);
+  public function testAddMultipleLines()
+  {
+    $data1 = [
+      'name' => 'John Doe',
+      'email' => 'john.doe@example.com',
+      'age' => 30,
+    ];
 
-        $expectedContent = "name,email,age\n" . '"John Doe"' . ",john.doe@example.com,30\n";
-        $actualContent = file_get_contents($file);
-        $this->assertEquals($expectedContent, $actualContent);
-    }
+    $data2 = [
+      'name' => 'Jane Smith',
+      'email' => 'jane.smith@example.com',
+      'age' => 25,
+    ];
 
-    public function testAddMultipleLines()
-    {
-        $data1 = [
-            'name' => 'John Doe',
-            'email' => 'john.doe@example.com',
-            'age' => 30,
-        ];
+    $file = $this->tempDir . '/test.csv';
+    $csv = new Csv();
 
-        $data2 = [
-            'name' => 'Jane Smith',
-            'email' => 'jane.smith@example.com',
-            'age' => 25,
-        ];
+    $result1 = $csv->addDataAsLine($data1, $file);
+    $result2 = $csv->addDataAsLine($data2, $file);
 
-        $file = $this->tempDir . '/test.csv';
-        $csv = new Csv();
+    $this->assertTrue($result1);
+    $this->assertTrue($result2);
 
-        $result1 = $csv->addDataAsLine($data1, $file);
-        $result2 = $csv->addDataAsLine($data2, $file);
+    $expectedContent = "name,email,age\n" . '"John Doe"' . ",john.doe@example.com,30\n" . '"Jane Smith"' . ",jane.smith@example.com,25\n";
+    $actualContent = file_get_contents($file);
+    $this->assertEquals($expectedContent, $actualContent);
+  }
 
-        $this->assertTrue($result1);
-        $this->assertTrue($result2);
+  public function testSpecialCharacters()
+  {
+    $data = [
+      'name' => 'James, "Jim" Brown',
+      'email' => "james@example.com\nnew_line",
+      'age' => 40,
+    ];
 
-        $expectedContent = "name,email,age\n" . '"John Doe"' . ",john.doe@example.com,30\n" . '"Jane Smith"' . ",jane.smith@example.com,25\n";
-        $actualContent = file_get_contents($file);
-        $this->assertEquals($expectedContent, $actualContent);
-    }
+    $file = $this->tempDir . '/test.csv';
+    $csv = new Csv();
 
-    public function testSpecialCharacters()
-    {
-        $data = [
-            'name' => 'James, "Jim" Brown',
-            'email' => "james@example.com\nnew_line",
-            'age' => 40,
-        ];
+    $result = $csv->addDataAsLine($data, $file);
 
-        $file = $this->tempDir . '/test.csv';
-        $csv = new Csv();
+    $this->assertTrue($result);
 
-        $result = $csv->addDataAsLine($data, $file);
+    $expectedContent = "name,email,age\n\"James, \"\"Jim\"\" Brown\",\"james@example.com\nnew_line\",40\n";
+    $actualContent = file_get_contents($file);
+    $this->assertEquals($expectedContent, $actualContent);
+  }
 
-        $this->assertTrue($result);
+  public function testFileNotExist()
+  {
+    $data = [
+      'name' => 'John Doe',
+      'email' => 'john.doe@example.com',
+      'age' => 30,
+    ];
 
-        $expectedContent = "name,email,age\n\"James, \"\"Jim\"\" Brown\",\"james@example.com\nnew_line\",40\n";
-        $actualContent = file_get_contents($file);
-        $this->assertEquals($expectedContent, $actualContent);
-    }
+    $file = $this->tempDir . '/nonexistent.csv';
+    $csv = new Csv();
 
-    public function testFileNotExist()
-    {
-        $data = [
-            'name' => 'John Doe',
-            'email' => 'john.doe@example.com',
-            'age' => 30,
-        ];
+    $result = $csv->addDataAsLine($data, $file);
 
-        $file = $this->tempDir . '/nonexistent.csv';
-        $csv = new Csv();
+    $this->assertTrue($result);
 
-        $result = $csv->addDataAsLine($data, $file);
-
-        $this->assertTrue($result);
-
-        $expectedContent = "name,email,age\n" . '"John Doe"' . ",john.doe@example.com,30\n";
-        $actualContent = file_get_contents($file);
-        $this->assertEquals($expectedContent, $actualContent);
-    }
+    $expectedContent = "name,email,age\n" . '"John Doe"' . ",john.doe@example.com,30\n";
+    $actualContent = file_get_contents($file);
+    $this->assertEquals($expectedContent, $actualContent);
+  }
 }

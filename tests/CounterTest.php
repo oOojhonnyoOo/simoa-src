@@ -7,75 +7,75 @@ use Simoa\Counter;
 
 final class CounterTest extends TestCase
 {
-    private $tempDir;
+  private $tempDir;
 
-    protected function setUp(): void
-    {
-        $this->tempDir = sys_get_temp_dir() . '/counters_test';
-        mkdir($this->tempDir, 0755);
+  protected function setUp(): void
+  {
+    $this->tempDir = sys_get_temp_dir() . '/counters_test';
+    mkdir($this->tempDir, 0755);
+  }
+
+  protected function tearDown(): void
+  {
+    $this->deleteDirectory($this->tempDir);
+  }
+
+  private function deleteDirectory($dir)
+  {
+    if (!file_exists($dir)) {
+      return;
     }
 
-    protected function tearDown(): void
-    {
-        $this->deleteDirectory($this->tempDir);
+    foreach (scandir($dir) as $item) {
+      if ($item === '.' || $item === '..') {
+        continue;
+      }
+      $path = $dir . '/' . $item;
+      if (is_dir($path)) {
+        $this->deleteDirectory($path);
+      } else {
+        unlink($path);
+      }
     }
+    rmdir($dir);
+  }
 
-    private function deleteDirectory($dir)
-    {
-        if (!file_exists($dir)) {
-            return;
-        }
+  public function testCreateModuleDirectory()
+  {
+    $data = $this->tempDir;
+    $counter = new Counter();
 
-        foreach (scandir($dir) as $item) {
-            if ($item === '.' || $item === '..') {
-                continue;
-            }
-            $path = $dir . '/' . $item;
-            if (is_dir($path)) {
-                $this->deleteDirectory($path);
-            } else {
-                unlink($path);
-            }
-        }
-        rmdir($dir);
-    }
+    $props = (object) [
+      'site' => 'example',
+      'module' => 'test',
+      'data' => $data,
+    ];
 
-    public function testCreateModuleDirectory()
-    {
-        $data = $this->tempDir;
-        $counter = new Counter();
+    $counter->createLastFile($props);
 
-        $props = (object) [
-            'site' => 'example',
-            'module' => 'test',
-            'data' => $data,
-        ];
+    $path = $props->data . "/counters/" . $props->site . "/" . $props->module;
 
-        $counter->createLastFile($props);
+    $this->assertFileExists($path);
+  }
 
-        $path = $props->data . "/counters/" . $props->site . "/" . $props->module;
+  public function testReset()
+  {
+    $data = $this->tempDir;
+    $counter = new Counter();
 
-        $this->assertFileExists($path);
-    }
+    $props = (object) [
+      'site' => 'example',
+      'module' => 'test',
+      'data' => $data,
+    ];
 
-    public function testReset()
-    {
-        $data = $this->tempDir;
-        $counter = new Counter();
+    $counter->createLastFile($props);
 
-        $props = (object) [
-            'site' => 'example',
-            'module' => 'test',
-            'data' => $data,
-        ];
+    $lastFile = $data . "/counters/" . $props->site . "/" . $props->module . "/last";
+    $this->assertTrue(file_exists($lastFile));
 
-        $counter->createLastFile($props);
-
-        $lastFile = $data . "/counters/" . $props->site . "/" . $props->module . "/last";
-        $this->assertTrue(file_exists($lastFile));
-
-        $counter->reset((object) $props);
-        $this->assertFileExists($lastFile);
-        $this->assertEquals('0', file_get_contents($lastFile));
-    }
+    $counter->reset((object) $props);
+    $this->assertFileExists($lastFile);
+    $this->assertEquals('0', file_get_contents($lastFile));
+  }
 }

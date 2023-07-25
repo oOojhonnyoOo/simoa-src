@@ -11,6 +11,9 @@ class Search
   var $module;
   var $params;
   var $hint = false;
+  var $config;
+  var $response;
+  var $headers;
 
   var $fq;
   var $q;
