@@ -3,6 +3,7 @@
 namespace Simoa;
 
 use \Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use Simoa\Helper;
 
 class Token
@@ -38,7 +39,7 @@ class Token
     //server cached info
     $url = $this->config->server->conta . "/token/$hashedToken.json";
 
-    return getUrlContent($url, []);
+    return Helper::getUrlContent($url, []);
   }
 
   function populateExtraInfo()
@@ -100,8 +101,7 @@ class Token
     try {
       $response = JWT::decode(
         $token,
-        $this->config->keys->token,
-        ['HS256']
+        new Key($this->config->keys->token, 'HS256')
       );
     } catch (\Firebase\JWT\ExpiredException $e) {
       return false;
