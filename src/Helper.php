@@ -818,7 +818,7 @@ class Helper
 
   public static function getPathDirectory()
   {
-    return getenv("PATH_FOLDER") ?? __DIR__ . "/../../../..";
+    return getenv("PATH_FOLDER") ? getenv("PATH_FOLDER") : dirname(__DIR__, 4);
   }
 
 }
