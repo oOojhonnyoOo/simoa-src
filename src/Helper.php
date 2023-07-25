@@ -17,6 +17,11 @@ class Helper
 
   public static function getallheaders()
   {
+
+    try {
+      return getallheaders();
+    } catch (Exception $ex) {}
+
     $headers = [];
     foreach ($_SERVER as $name => $value) {
         if (substr($name, 0, 5) === 'HTTP_') {
@@ -811,6 +816,9 @@ class Helper
     return  $valor['d'] . "/" . $valor['m'] . "/" . $valor['Y'] . " " . $valor['H'] . ":" . $valor['i'] . ":" . $valor['s'];
   }
 
-
+  public static function getPathDirectory()
+  {
+    return getenv("PATH_FOLDER") ?? __DIR__ . "/../../../..";
+  }
 
 }

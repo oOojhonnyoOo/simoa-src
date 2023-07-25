@@ -10,6 +10,11 @@ abstract class Controller
   var $cache;
   var $keepStatusOnSave = true;
 
+  public function __construct()
+  {
+    // used on Module.php on module method
+  }
+
   public function __solrDeleteByQuery($query)
   {
     return (new Solr\Document($this->config->solr->default))->deleteByQuery($query);

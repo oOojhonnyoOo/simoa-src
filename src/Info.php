@@ -20,7 +20,7 @@ class Info extends Module
 
   function init()
   {
-    $this->path = getenv("PATH_FOLDER") ?? dirname(__DIR__, 3);
+    $this->path = Helper::getPathDirectory();
   }
 
   function default()

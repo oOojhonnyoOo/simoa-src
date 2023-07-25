@@ -52,7 +52,7 @@ class Config
 
   function init()
   {
-    $this->path = getenv("PATH_FOLDER") ?? dirname(__DIR__, 3);
+    $this->path = Helper::getPathDirectory();
     $this->public = $this->path . "/public";
     $this->private = $this->path . "/private";
     $this->preview = $this->path . "/preview";

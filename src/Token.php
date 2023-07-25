@@ -80,7 +80,8 @@ class Token
     
     return JWT::encode(
       $array,
-      $this->config->keys->token
+      $this->config->keys->token,
+      "HS256"
     );
   }
 
